@@ -9,6 +9,7 @@ app.listen(3000);
 
 // Defining requests
 
-app.static(__dirname + "../static");
+app.use(express.static("static"));
 
-app.get("/api:version", (req, res) => void {});
+console.log("Server launching at 3000 port");
+console.log("http://localhost:3000");
