@@ -1,3 +1,6 @@
+# Google Apps Script Config Files
+.clasp.json
+
 # Logs
 logs
 *.log
