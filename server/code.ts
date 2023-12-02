@@ -4,7 +4,11 @@ ScriptProperties.setProperty("result", "");
 
 // Functions of request
 
-function doGet(e:any) {}
+function doGet(e:any) {
+    if (e.parameter.req == "get") {
+        get();
+    }
+}
 function doPost(e:any) {}
 
 // Setting request properties
@@ -34,6 +38,7 @@ function get() :void /* The function of get data */ {
             for ( let x:number = 0; x <= properties.length; x++ ) {
                 let result:any = ScriptProperties.getProperty("result");
                 result[query][properties[x+1]] = obj[x+1];
+                ScriptProperties.setProperty("result", result);
             }
         }
     }
