@@ -1,3 +1,14 @@
+function updateRangeValue(sheet, row, column, value) {
+    let letter = "";
+    let abc = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    if (column+1 >= 1 && column <= 26) {
+        letter = abc.charAt(column-1);
+    }
+    let range = sheet.getRange(row, column + 1)
+    range.setValue(value);
+    return [row, column + 1];
+}
+
 function appendRows(sheet, rows) {
     for (let i = 0; i < rows.length; i++) {
       sheet.appendRow([rows].copyWithin(i));
@@ -61,11 +72,36 @@ function doPost(e) {
         }
     }
     else if (type == "update") {
-        ss.getRange().setValue();
+        let glob_dat = "";
+        let rowNum = [data].copyWithin(0);
+        let result = [data];
+        [data].forEach(elem => {
+            let rowNum = e.parameter.row;
+            let head = e.parameter.column;
+            for (let i = 0; i < JSON.parse(elem).length; i++) {
+                for (let i2 = 0; i < 
+                Array.from(JSON.parse(elem)[i]).length; i2++) {
+                    let value = JSON.parse(elem)[i][i2];
+                    result.push(updateRangeValue(page, rowNum, i2, value));
+                }
+            }
+            () => {}
+        })
+        res = {
+            updated: 1,
+            sheet: sheet,
+            body: data,
+            rowNum: rowNum,
+        }
     }
     else if (type == "delete") {
         let rowNum = e.parameter.row;
         page.deleteRow(rowNum);
+        res = {
+            deleted: 1,
+            row: [data].copyWithin(0),
+            sheet: sheet
+        }
     }
     if (res) {
       res = JSON.stringify(res);

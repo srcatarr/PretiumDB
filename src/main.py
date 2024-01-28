@@ -75,15 +75,19 @@ def api_req_param(req, param):
             return json.loads(res.content)
         except ValueError: return json.loads('{"error": 1}')
     if request.method == "PATCH":
+        row = request.get_json()
+        row = row[0]
+        column = decomp(request.get_json()[1:])[1]
         try:
             res = requests.post(
-                f"{api}?id={req}&sheet={param}&type=update",
+                f"{api}?id={req}&sheet={param}&type=update&row={row}&column={column}",
                 headers={
                     "Accept": "application/json",
                     "Content-Type": "application/json"
                 },
-                data=request.get_data()
+                data=json.dumps(decomp(request.get_json()[1:])[1:])
             )
+            return json.loads(res.content)
         except ValueError: return json.loads('{"error": 1}')
     if request.method == "DELETE":
         dat = request.get_json()
