@@ -1,5 +1,5 @@
 from flask import *
-import requests, dotenv, os, json, time
+import requests, dotenv, os, json, base64
 
 dotenv.load_dotenv(
     os.path.join(
@@ -23,6 +23,33 @@ def decomp(arr):
     res = [keys, *(list(obj.values()) for obj in arr)]
     return res
 
+def toDataURI(txt: str, type="text/plain"):
+    # Text to base64
+    txtToBase64 = base64.b64encode(txt.encode()).decode("utf-8")
+    data_uri = f"data:{type};base64,{txtToBase64}"
+    return data_uri
+
+# Web Site
+
+def getReadme(lang):
+    readme_path = os.path.join(
+        os.path.dirname(__file__).replace("src", ""), f"README.{lang}.md"
+    )
+    with open(readme_path, "r", encoding="utf-8") as file:
+        return toDataURI(file.read())
+
+
+@app.route("/")
+def master():
+    return render_template("index.html", readme=getReadme("tr"))
+
+@app.errorhandler(404)
+def not_found(err):
+    return err
+
+
+
+# API
 
 @app.route("/api/<req>", methods=["GET", "POST"])
 def api_req(req):
