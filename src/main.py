@@ -63,6 +63,8 @@ def api_req(req):
 @app.route("/api/<req>/<param>", methods=["GET", "POST", "DELETE", "PATCH"])
 def api_req_param(req, param):
     if request.method == "POST":
+        if param == "insertsheet":
+            pass
         try:
             res = requests.post(
                 f"{api}?id={req}&sheet={param}&type=create",
