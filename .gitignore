@@ -2,3 +2,5 @@
 .env
 # Test file
 test.py
+# Vercel configuration folder
+.vercel
