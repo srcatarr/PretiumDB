@@ -1,0 +1,25 @@
+{
+  "name": "pretiumdb",
+  "version": "1.0.0",
+  "description": "Turn a Google SpreadSheet into a database",
+  "main": "src/main.py",
+  "scripts": {
+    "test": "echo Test command not found && exit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/srcatarr/PretiumDB.git"
+  },
+  "keywords": [
+    "spreadsheets",
+    "pretiumdb",
+    "db",
+    "excel"
+  ],
+  "author": "[array]",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/srcatarr/PretiumDB/issues"
+  },
+  "homepage": "https://github.com/srcatarr/PretiumDB#readme"
+}
