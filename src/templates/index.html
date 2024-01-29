@@ -33,17 +33,28 @@
         input[type="submit"]:hover, input[type="button"]:hover {
             background-color: darkolivegreen;
         }
-        #nav {
+        /* #nav {
             position: sticky;
             top: 0;
             z-index: 101;
-        }
+        } */
         #icon {
             cursor: pointer;
             transition: 0.2s;
         }
         #icon:hover {
             letter-spacing: 5px;
+        }
+        #github_icon {
+            background: #fff;
+            color: #000;
+            border-radius: 50%;
+            width: auto;
+            height: 25px auto;
+            transition: 0.2s;
+        }
+        #github_icon:hover {
+            background: #198754;
         }
     </style>
 </head>
@@ -56,13 +67,17 @@
     </div>
     {% if error %}
     <p class="bg-danger text-white p-2" style="text-align: center;">
-        Hata: {{ error }}
+        {{ error }}
     </p>
     {% endif %}<br><br>
     {% if logged %}
     <center>
     </center>
     {% else %}
+    <center>
+        <img src="https://img.shields.io/github/package-json/v/srcatarr/pretiumdb?style=for-the-badge&amp;logo=github&amp;label=fork+me+on+github" alt="version">
+        <br>
+    </center>
     <div class="container-fluid">
         <zero-md src="{{ readme }}">
             <!--script type="text/markdown">{{ readme }}</script-->
@@ -77,11 +92,54 @@
                         color: #fff;
                         border: #fff;
                     }
+                    table {
+                        background: #212529;
+                        border-radius: 8px;
+                    }
+                    th, td {
+                        background: #394047;
+                        border-radius: 2px;
+                        color: #fff;
+                        padding: 10px;
+                    }
+                    p code {
+                        background: #394047;
+                        padding: 3px;
+                        border-radius: 8px;
+                    }
+                    pre {
+                        background: #394047;
+                        padding: 3px;
+                        border-radius: 8px;
+                    }
+                    pre code {
+                        background: #394047;
+                    }
+                    pre code span {
+                        background: #394047;
+                    }
                 </style>
             </template>
         </zero-md>
-    </div>
+    </div><br><br>
     {% endif %}
+    <div class="bg-black p-5">
+        <h1 style="font-size: 4rem;">
+            <b id="icon" class="text-success">[array]</b>
+        </h1>
+        <img style="height: 10rem;" src="{{ url_for('static', filename='img/ozluce.png') }}" alt="Özlüce">
+        <hr>
+        <elem style="font-size: large;">
+            [array], Bursa Özlüce Şehit Aykut Yurtsever Anadolu Lisesi'nde kurulmuştur.
+        </elem>
+        <elem style="position: absolute; right: 3%;">
+            <input 
+            onclick="window.location.href = 'https://github.com/srcatarr';"
+            id="github_icon" 
+            type="image" 
+            src="{{ url_for('static', filename='img/github.svg') }}">
+        </elem>
+    </div>
     <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
 </html>

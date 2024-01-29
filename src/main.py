@@ -36,12 +36,22 @@ def getReadme(lang):
         os.path.dirname(__file__).replace("src", ""), f"README.{lang}.md"
     )
     with open(readme_path, "r", encoding="utf-8") as file:
-        return toDataURI(file.read())
+        if file.readable():
+            return toDataURI(file.read())
+        else:
+            with open(readme_path.replace(f"README.{lang}.md", "404.md"), "r") as f404:
+                return toDataURI(f404.read())
 
 
 @app.route("/")
 def master():
-    return render_template("index.html", readme=getReadme("tr"))
+    return """
+        <script>window.location.href = navigator.language.split("-")[0];</script>
+    """
+
+@app.route("/<lang>")
+def master2(lang):
+    return render_template("index.html", readme=getReadme(lang), lang=lang)
 
 @app.errorhandler(404)
 def not_found(err):
@@ -54,34 +64,49 @@ def not_found(err):
 @app.route("/api/<req>", methods=["GET", "POST"])
 def api_req(req):
     if request.method == "POST":
-        res = requests.post(
-            f"{api}?id={req}&type=create",
-            headers={
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
-            data=request.get_json()
-        )
-        return json.loads(res.content)
+        if param == "insertsheet":
+            pass
+        try:
+            res = requests.post(
+                f"{api}?id={req}&type=create",
+                headers={
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                data=json.dumps(decomp(request.get_json())[1:])
+            )
+            return json.loads(res.content)
+        except ValueError: return json.loads('{"error": 1}')
     if request.method == "PATCH":
-        res = requests.post(
-            f"{api}?id={req}&type=update&data={request.form}",
-            headers={
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
-            data=request.form
-        )
+        row = request.get_json()
+        row = row[0]
+        column = decomp(request.get_json()[1:])[1]
+        try:
+            res = requests.post(
+                f"{api}?id={req}&type=update&row={row}&column={column}",
+                headers={
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                data=json.dumps(decomp(request.get_json()[1:])[1:])
+            )
+            return json.loads(res.content)
+        except ValueError: return json.loads('{"error": 1}')
     if request.method == "DELETE":
-        res = requests.post(
-            f"{api}?id={req}&type=delete&data={request.form}",
-            headers={
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
-            data=request.form
-        )
-    res = requests.get(f"{api}?id={req}")
+        dat = request.get_json()
+        dat = dat[0]
+        try:
+            res = requests.post(
+                f"{api}?id={req}&type=delete&row={dat}",
+                headers={
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                data="empty"
+            )
+            return json.loads(res.content)
+        except ValueError: return json.loads('{"error": 1}')
+    res = requests.get(f"{api}?id={req}&sheet={param}")
     try:
         return json.loads(res.content)
     except: pass
