@@ -19,114 +19,114 @@ Google SpreadSheet tablosunu açtığınızda `https://docs.google.com/spreadshe
 ## Okumak
 `/api/abcdef0123456789` rotasına bir `GET` isteğinde bulunduğunuzda, tablonun ilk sayfasındaki verileri JSON türünde geri döndürür. Örnek olarak Python'da kullanım şöyledir;
 ```python
-    import requests
+import requests
 
-    response = requests.get(
-        "https://.../api/abcdef0123456789"
-    )
+response = requests.get(
+    "https://.../api/abcdef0123456789"
+)
 ```
 Özel bir sayfanın verisini çekmek için `/api/abcdef0123456789/Sayfa_Adı` rotasına bir `GET` isteğinde bulunduğunuzda, tablonun `Sayfa_Adı` isimli sayfasındaki verileri JSON türünde geri döndürür.
 
 ```python
-    import requests
+import requests
 
-    response = requests.get(
-        "https://.../api/abcdef0123456789/Sayfa_Adı"
-    )
+response = requests.get(
+    "https://.../api/abcdef0123456789/Sayfa_Adı"
+)
 ```
 
 ## Oluşturmak
 `/api/abcdef0123456789` rotasına bir `POST` isteğinde bulunduğunuzda, tablonun ilk sayfasına yeni bir satır ekler.
 ```python
-    import requests, json
+import requests, json
 
-    headers = {
-        "Accept": "application/json",
-        "Content-Type": "application/json"
+headers = {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+}
+
+data = [
+    {
+        "username": "deneme",
+        "password": "12345"
     }
+]
 
-    data = [
-        {
-            "username": "deneme",
-            "password": "12345"
-        }
-    ]
-
-    response = requests.post(
-        "https://.../api/abcdef0123456789/",
-        headers=headers,
-        data=json.dumps(data)
-    )
+response = requests.post(
+    "https://.../api/abcdef0123456789/",
+    headers=headers,
+    data=json.dumps(data)
+)
 ```
 Özel bir sayfanın verisini yenilemek için `/api/abcdef0123456789/Sayfa_Adı` rotasına bir `POST` isteğinde bulunduğunuzda, tablonun `Sayfa_Adı` isimli sayfasına yeni bir satır ekler.
 ```python
-    import requests, json
+import requests, json
 
-    headers = {
-        "Accept": "application/json",
-        "Content-Type": "application/json"
+headers = {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+}
+
+data = [
+    {
+        "username": "deneme",
+        "password": "12345"
     }
+]
 
-    data = [
-        {
-            "username": "deneme",
-            "password": "12345"
-        }
-    ]
-
-    response = requests.post(
-        "https://.../api/abcdef0123456789/Sayfa_Adı",
-        headers=headers,
-        data=json.dumps(data)
-    )
+response = requests.post(
+    "https://.../api/abcdef0123456789/Sayfa_Adı",
+    headers=headers,
+    data=json.dumps(data)
+)
 ```
 
 ## Güncellemek
 `/api/abcdef0123456789` rotasına bir `PATCH` isteğinde bulunduğunuzda, tablonun belirlenen satırında bulunan verileri günceller.
 ```python
-    import requests, json
+import requests, json
 
-    headers = {
-        "Accept": "application/json",
-        "Content-Type": "application/json"
+headers = {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+}
+
+data = [
+    1,
+    {
+        "username": "yasir",
+        "password": "54321"
     }
+]
 
-    data = [
-        1,
-        {
-            "username": "yasir",
-            "password": "54321"
-        }
-    ]
-
-    response = requests.patch(
-        "https://.../api/abcdef0123456789/",
-        headers=headers,
-        data=json.dumps(data)
-    )
+response = requests.patch(
+    "https://.../api/abcdef0123456789/",
+    headers=headers,
+    data=json.dumps(data)
+)
 ```
 `data` listesinin birinci elemanı güncellenecek satır numarasıdır. Özel bir sayfanın verisini yenilemek için `/api/abcdef0123456789/Sayfa_Adı` rotasına bir `PATCH` isteğinde bulunduğunuzda, tablonun `Sayfa_Adı` isimli sayfasının belirlenen satırında bulunan verileri günceller.
 ```python
-    import requests, json
+import requests, json
 
-    headers = {
-        "Accept": "application/json",
-        "Content-Type": "application/json"
+headers = {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+}
+
+data = [
+    1,
+    {
+        "username": "yasir",
+        "password": "54321"
     }
+]
 
-    data = [
-        1,
-        {
-            "username": "yasir",
-            "password": "54321"
-        }
-    ]
-
-    response = requests.patch(
-        "https://.../api/abcdef0123456789/Sayfa_Adı",
-        headers=headers,
-        data=json.dumps(data)
-    )
+response = requests.patch(
+    "https://.../api/abcdef0123456789/Sayfa_Adı",
+    headers=headers,
+    data=json.dumps(data)
+)
 ```
 Aynı şekilde, `data` listesinin birinci elemanı satır numarasıdır.
 
@@ -145,19 +145,19 @@ Eğer `data` listesinin birinci elemanı `1` ise `2` iki numaralı satırı baz 
 `/api/abcdef0123456789` rotasına bir `DELETE` isteğinde bulunduğunuzda, tablonun ilk sayfasının belirlenen satırını siler.
 
 ```python
-    import requests, json
+import requests, json
 
-    headers = {
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-    }
+headers = {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+}
 
-    data = [1]
+data = [1]
 
-    response = requests.delete(
-        "https://.../api/abcdef0123456789/",
-        headers=headers,
-        data=json.dumps(data)
-    )
+response = requests.delete(
+    "https://.../api/abcdef0123456789/",
+    headers=headers,
+    data=json.dumps(data)
+)
 ```
 Özel bir sayfanın verisini yenilemek için `/api/abcdef0123456789/Sayfa_Adı` rotasına bir `DELETE` isteğinde bulunduğunuzda, tablonun `Sayfa_Adı` sayfasından belirlenen satırını siler.
