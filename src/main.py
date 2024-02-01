@@ -64,8 +64,6 @@ def not_found(err):
 @app.route("/api/<req>", methods=["GET", "POST"])
 def api_req(req):
     if request.method == "POST":
-        if param == "insertsheet":
-            pass
         try:
             res = requests.post(
                 f"{api}?id={req}&type=create",
@@ -106,7 +104,7 @@ def api_req(req):
             )
             return json.loads(res.content)
         except ValueError: return json.loads('{"error": 1}')
-    res = requests.get(f"{api}?id={req}&sheet={param}")
+    res = requests.get(f"{api}?id={req}")
     try:
         return json.loads(res.content)
     except: pass
